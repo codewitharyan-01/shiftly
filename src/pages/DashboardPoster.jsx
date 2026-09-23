@@ -174,7 +174,7 @@ const PosterHome = ({ user, shifts, applications, setActiveTab }) => {
           </div>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -210,7 +210,13 @@ const PosterPostShift = ({ user, addShift, addNotification, setActiveTab }) => {
   const inputStyle = { width: '100%', padding: '11px 14px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', backgroundColor: 'var(--color-bg)', outline: 'none', fontSize: '0.95rem' };
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '28px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '4px' }}>Post a Shift</h1>
@@ -329,7 +335,13 @@ const PosterManageShifts = ({ user, shifts, applications, updateApplicationStatu
   const filtered = filterStatus === 'all' ? myShifts : myShifts.filter(s => s.status === filterStatus);
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: '800', margin: 0 }}>Manage Shifts</h1>
         <div style={{ display: 'flex', gap: '8px' }}>
@@ -422,7 +434,13 @@ const PosterPayments = () => {
   ];
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '12px' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: '800', margin: 0 }}>Payments</h1>
         <Button variant="primary" onClick={() => setShowAddFunds(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -528,7 +546,13 @@ const PosterProfile = ({ user, updateProfile, addNotification }) => {
   };
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px', backgroundColor: 'var(--color-bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)' }}>
         <div style={{ width: '64px', height: '64px', borderRadius: '16px', background: 'linear-gradient(135deg, #007AFF, #0051d4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', fontWeight: '800', color: '#fff', flexShrink: 0 }}>
           {(user.businessName || user.name || 'B')[0].toUpperCase()}
