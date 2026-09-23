@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { LogOut, Bell, X, Zap } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { NotificationContext } from '../context/NotificationContext';
-import Footer from './Footer';
 
 const DashboardLayout = ({ children, activeTab, setActiveTab, onLogout, navItems = [] }) => {
   const { user } = useContext(AuthContext);
@@ -170,8 +169,7 @@ const DashboardLayout = ({ children, activeTab, setActiveTab, onLogout, navItems
           {children}
         </main>
         
-        {/* Dashboard Footer — lives inside the main-wrapper so it respects the sidebar offset */}
-        <Footer />
+        {/* Dashboard Footer removed per user request */}
         {/* Spacer for mobile bottom nav */}
         <div className="mobile-bottom-nav-spacer" style={{ height: '80px' }} />
       </div>
