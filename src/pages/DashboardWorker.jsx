@@ -688,7 +688,7 @@ const WorkerProfile = ({ user, updateProfile }) => {
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
