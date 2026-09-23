@@ -22,15 +22,11 @@ const timeAgo = (timestamp) => {
 };
 
 const InfoCard = ({ icon: Icon, label, value, accent }) => (
-  <div style={{
-    backgroundColor: 'var(--color-bg-card)',
-    padding: '20px 24px',
-    borderRadius: 'var(--radius-lg)',
-    boxShadow: 'var(--shadow-sm)',
+  <div className="glass-card hover-lift premium-card" style={{
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
-    border: '1px solid var(--color-border)',
+    border: 'none',
   }}>
     <div style={{
       width: '48px', height: '48px', borderRadius: '12px', flexShrink: 0,
@@ -195,7 +191,7 @@ const ShiftDetails = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
 
           {/* Info Cards */}
-          <div className="grid-2" style={{ gap: '16px' }}>
+          <div className="auto-grid" style={{ gap: '16px' }}>
             <InfoCard
               icon={IndianRupee}
               label="Pay"
@@ -228,10 +224,9 @@ const ShiftDetails = () => {
             {/* Left: Description */}
             <div>
               {/* Description */}
-              <div style={{
-                backgroundColor: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)',
-                padding: '32px', boxShadow: 'var(--shadow-sm)', marginBottom: '24px',
-                border: '1px solid var(--color-border)',
+              <div className="glass-card" style={{
+                marginBottom: '24px',
+                border: 'none',
               }}>
                 <h2 style={{ margin: '0 0 16px 0', fontSize: '1.25rem' }}>About This Shift</h2>
                 <p style={{ lineHeight: '1.8', color: 'var(--color-text-main)', margin: '0 0 24px 0' }}>
@@ -291,10 +286,8 @@ const ShiftDetails = () => {
               </div>
 
               {/* Map */}
-              <div style={{
-                backgroundColor: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)',
-                overflow: 'hidden', boxShadow: 'var(--shadow-sm)',
-                border: '1px solid var(--color-border)', marginBottom: '24px',
+              <div className="glass-card premium-card hover-lift" style={{
+                overflow: 'hidden', padding: 0, marginBottom: '24px', border: 'none'
               }}>
                 <img
                   src="/mock_map.jpg"
@@ -309,11 +302,8 @@ const ShiftDetails = () => {
             </div>
 
             {/* Sticky Poster + Apply Card */}
-            <div style={{
-              backgroundColor: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)',
-              padding: '32px', boxShadow: 'var(--shadow-sm)',
-              border: '1px solid var(--color-border)',
-              alignSelf: 'start',
+            <div className="glass-card" style={{
+              alignSelf: 'start', border: 'none'
             }}>
               {/* Poster Info */}
               <div style={{ marginBottom: '24px', paddingBottom: '24px', borderBottom: '1px solid var(--color-border)' }}>
@@ -408,7 +398,7 @@ const ShiftDetails = () => {
           <div style={{ marginTop: '64px' }}>
             <h2 style={{ fontSize: '1.75rem', marginBottom: '8px' }}>Similar Shifts</h2>
             <p className="text-muted" style={{ marginBottom: '32px' }}>More opportunities in {shift.category}</p>
-            <div className="grid-3">
+            <div className="auto-grid">
               {similarShifts.map(s => <ShiftCard key={s.id} shift={s} />)}
             </div>
           </div>

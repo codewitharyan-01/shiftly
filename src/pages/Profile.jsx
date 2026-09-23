@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import { NotificationContext } from '../context/NotificationContext';
 import Modal from '../components/Modal';
@@ -39,14 +40,7 @@ const passwordStrength = (pw) => {
 
 // ─── Reusable sub-components ──────────────────────────────────────────────────
 const SectionCard = ({ title, icon: Icon, children }) => (
-  <div style={{
-    backgroundColor: 'var(--color-bg-card)',
-    borderRadius: 'var(--radius-lg)',
-    padding: '32px',
-    boxShadow: 'var(--shadow-sm)',
-    border: '1px solid var(--color-border)',
-    marginBottom: '24px',
-  }}>
+  <div className="glass-card stagger-fade-in premium-card hover-scale" style={{ marginBottom: '24px', border: 'none' }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px', paddingBottom: '20px', borderBottom: '1px solid var(--color-border)' }}>
       <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: 'rgba(0,122,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <Icon size={20} color="var(--color-primary)" />
@@ -260,7 +254,13 @@ const Profile = () => {
   );
 
   return (
-    <div style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg)', paddingTop: '80px', paddingBottom: '80px' }}>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      style={{ minHeight: '100vh', backgroundColor: 'var(--color-bg)', paddingTop: '80px', paddingBottom: '80px' }}
+    >
       <div style={{ maxWidth: '860px', margin: '0 auto', padding: '0 24px' }}>
 
         {/* Page Header */}
@@ -315,7 +315,7 @@ const Profile = () => {
         {/* ─── PROFILE FORM ─── */}
         <form onSubmit={handleSaveProfile}>
           <SectionCard title="Personal Information" icon={User}>
-            <div className="grid-2" style={{ gap: '16px' }}>
+            <div className="auto-grid" style={{ gap: '16px', marginBottom: '16px' }}>
               <Input label="Full Name" value={profileData.name} onChange={e => setProfileData({ ...profileData, name: e.target.value })} />
               <Input label="Phone Number" value={profileData.phone} onChange={e => setProfileData({ ...profileData, phone: e.target.value })} />
               <Input label="Email Address" type="email" value={profileData.email} onChange={e => setProfileData({ ...profileData, email: e.target.value })} />
@@ -352,7 +352,7 @@ const Profile = () => {
 
             {/* Poster-specific */}
             {user.role === 'poster' && (
-              <div className="grid-2" style={{ gap: '16px', marginTop: '8px' }}>
+              <div className="auto-grid" style={{ gap: '16px', marginTop: '16px', marginBottom: '16px' }}>
                 <Input label="Business Name" value={profileData.businessName} onChange={e => setProfileData({ ...profileData, businessName: e.target.value })} />
                 <div>
                   <label style={{ fontSize: '0.95rem', fontWeight: '500', display: 'block', marginBottom: '8px' }}>Business Category</label>
@@ -480,11 +480,9 @@ const Profile = () => {
         </SectionCard>
 
         {/* ─── DANGER ZONE ─── */}
-        <div style={{
+        <div className="glass-card hover-scale stagger-fade-in premium-card" style={{
           backgroundColor: 'rgba(255,59,48,0.04)',
           border: '1px solid rgba(255,59,48,0.2)',
-          borderRadius: 'var(--radius-lg)',
-          padding: '32px',
           marginBottom: '24px',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid rgba(255,59,48,0.15)' }}>
@@ -566,7 +564,7 @@ const Profile = () => {
           </button>
         </div>
       </Modal>
-    </div>
+    </motion.div>
   );
 };
 

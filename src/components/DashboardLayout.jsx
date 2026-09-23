@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { LogOut, Bell, X, Zap } from 'lucide-react';
+import { LogOut, Bell, X, Zap, Moon, Sun } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { NotificationContext } from '../context/NotificationContext';
 
@@ -8,6 +8,14 @@ const DashboardLayout = ({ children, activeTab, setActiveTab, onLogout, navItems
   const { user } = useContext(AuthContext);
   const { notifications } = useContext(NotificationContext);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => prev === 'light' ? 'dark' : 'light');
 
   const unread = (notifications || []).filter(n => !n.read).length;
   const recentNotifs = (notifications || []).slice(-5).reverse();
@@ -116,6 +124,12 @@ const DashboardLayout = ({ children, activeTab, setActiveTab, onLogout, navItems
           </h1>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <button
+              onClick={toggleTheme}
+              style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'var(--color-bg-card)', border: '1px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'all 0.2s', boxShadow: 'var(--shadow-sm)' }}
+            >
+              {theme === 'light' ? <Moon size={18} color="var(--color-text-main)" /> : <Sun size={18} color="var(--color-text-main)" />}
+            </button>
             {/* Notification bell */}
             <div style={{ position: 'relative' }}>
               <button

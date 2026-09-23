@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import { ShiftContext } from '../context/ShiftContext';
 import DashboardLayout from '../components/DashboardLayout';
@@ -58,7 +59,13 @@ const WorkerHome = ({ user, shifts, applications, setActiveTab }) => {
   ];
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
@@ -76,7 +83,7 @@ const WorkerHome = ({ user, shifts, applications, setActiveTab }) => {
 
       {/* Today's Shift Card */}
       {todayShift && (
-        <div style={{ background: 'linear-gradient(135deg, var(--color-primary), #0051d4)', borderRadius: 'var(--radius-lg)', padding: '24px', marginBottom: '28px', color: '#fff' }}>
+        <div className="glass-card hover-lift" style={{ background: 'linear-gradient(135deg, var(--color-primary), #0051d4)', borderRadius: 'var(--radius-lg)', padding: '24px', marginBottom: '28px', color: '#fff', border: 'none', boxShadow: 'var(--shadow-md)' }}>
           <p style={{ margin: '0 0 8px', opacity: 0.8, fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Today's Shift</p>
           <h2 style={{ margin: '0 0 8px', fontSize: '1.4rem' }}>{todayShift.title}</h2>
           <p style={{ margin: '0 0 20px', opacity: 0.85, display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -102,7 +109,7 @@ const WorkerHome = ({ user, shifts, applications, setActiveTab }) => {
       )}
 
       {/* Stats */}
-      <div className="grid-3" style={{ marginBottom: '36px' }}>
+      <div className="auto-grid" style={{ marginBottom: '36px' }}>
         <StatCard icon={IndianRupee} iconBg="#e9f8ee" iconColor="var(--color-success)" label="Earned This Week" value="₹1,150" sub="+₹350 vs last week" />
         <StatCard icon={CheckCircle} iconBg="#e5f1ff" iconColor="var(--color-primary)" label="Shifts Completed" value="12" sub="3 this month" />
         <StatCard icon={FileText} iconBg="rgba(255,184,0,0.12)" iconColor="#FFB800" label="Pending Apps" value={pendingApps} sub="2 under review" />
@@ -132,13 +139,13 @@ const WorkerHome = ({ user, shifts, applications, setActiveTab }) => {
           See all <ChevronRight size={16} />
         </button>
       </div>
-      <div className="scroll-x" style={{ marginBottom: '40px' }}>
+      <div className="scroll-x hover-lift" style={{ marginBottom: '40px' }}>
         {recommended.length > 0 ? recommended.map(s => (
-          <div key={s.id} style={{ width: '85vw', maxWidth: '340px' }}>
+          <div key={s.id} className="premium-card" style={{ width: '85vw', maxWidth: '340px' }}>
             <ShiftCard shift={s} />
           </div>
         )) : (
-          <div style={{ width: '100%', textAlign: 'center', padding: '40px', backgroundColor: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)' }}>
+          <div className="glass-card" style={{ width: '100%', textAlign: 'center' }}>
             <Ghost size={40} color="var(--color-text-muted)" style={{ opacity: 0.3, marginBottom: '12px' }} />
             <h3 style={{ margin: '0 0 8px' }}>No Recommendations Yet</h3>
             <p className="text-muted" style={{ margin: '0 0 16px' }}>Complete your profile to get personalised matches.</p>
@@ -153,12 +160,12 @@ const WorkerHome = ({ user, shifts, applications, setActiveTab }) => {
       </h2>
       <div className="scroll-x">
         {urgent.length > 0 ? urgent.map(s => (
-          <div key={s.id} style={{ width: '85vw', maxWidth: '340px' }}>
+          <div key={s.id} className="premium-card" style={{ width: '85vw', maxWidth: '340px' }}>
             <ShiftCard shift={s} />
           </div>
         )) : <p className="text-muted" style={{ paddingLeft: '16px' }}>No urgent shifts right now.</p>}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -185,7 +192,13 @@ const WorkerBrowse = ({ shifts }) => {
     });
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: '800', margin: 0 }}>Browse Shifts</h1>
         <button onClick={() => setShowFilters(!showFilters)} style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '8px 16px', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', background: showFilters ? 'var(--color-primary)' : 'transparent', color: showFilters ? '#fff' : 'var(--color-text-main)', cursor: 'pointer', fontWeight: '500' }}>
@@ -242,16 +255,16 @@ const WorkerBrowse = ({ shifts }) => {
 
       <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', marginBottom: '20px' }}>{filtered.length} shifts found</p>
 
-      <div className="grid-3">
+      <div className="auto-grid stagger-fade-in">
         {filtered.length > 0 ? filtered.map(s => <ShiftCard key={s.id} shift={s} />) : (
-          <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '48px', backgroundColor: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)' }}>
+          <div className="glass-card" style={{ gridColumn: '1 / -1', textAlign: 'center' }}>
             <Search size={40} color="var(--color-text-muted)" style={{ opacity: 0.3, marginBottom: '12px' }} />
             <h3 style={{ margin: '0 0 8px' }}>No Shifts Found</h3>
             <p className="text-muted" style={{ margin: 0 }}>Try adjusting filters or search terms.</p>
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -282,7 +295,13 @@ const WorkerApplications = ({ applications, shifts }) => {
   const STEPS = ['GPS Verify', 'Take Selfie', 'Confirmed'];
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <h1 style={{ fontSize: '1.75rem', fontWeight: '800', marginBottom: '24px' }}>My Applications</h1>
 
       {/* Status legend */}
@@ -399,7 +418,7 @@ const WorkerApplications = ({ applications, shifts }) => {
           </div>
         )}
       </Modal>
-    </div>
+    </motion.div>
   );
 };
 
@@ -422,7 +441,13 @@ const WorkerEarnings = ({ earnings, weeklyChart }) => {
   ];
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '28px', flexWrap: 'wrap', gap: '16px' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: '800', margin: 0 }}>Earnings</h1>
         <Button variant="primary" onClick={() => setShowWithdraw(true)} style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -431,7 +456,7 @@ const WorkerEarnings = ({ earnings, weeklyChart }) => {
       </div>
 
       {/* Balance card */}
-      <div style={{ background: 'linear-gradient(135deg, #007AFF, #0051d4)', borderRadius: 'var(--radius-lg)', padding: '28px 32px', marginBottom: '28px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+      <div className="glass-card premium-card" style={{ background: 'linear-gradient(135deg, #007AFF, #0051d4)', padding: '28px 32px', marginBottom: '28px', color: '#fff', position: 'relative', overflow: 'hidden', border: 'none' }}>
         <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.07 }}><IndianRupee size={140} /></div>
         <p style={{ margin: '0 0 6px', opacity: 0.8, fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Available Balance</p>
         <p style={{ fontSize: '3rem', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-1px' }}>₹1,150</p>
@@ -513,7 +538,7 @@ const WorkerEarnings = ({ earnings, weeklyChart }) => {
           </div>
         )}
       </Modal>
-    </div>
+    </motion.div>
   );
 };
 
@@ -556,7 +581,13 @@ const WorkerProfile = ({ user, updateProfile }) => {
   ];
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px', backgroundColor: 'var(--color-bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)' }}>
         <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: 'linear-gradient(135deg, #007AFF, #0051d4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.75rem', fontWeight: '800', color: '#fff', flexShrink: 0 }}>
@@ -581,9 +612,9 @@ const WorkerProfile = ({ user, updateProfile }) => {
         </div>
       </div>
 
-      <div className="grid-2" style={{ gap: '20px' }}>
+      <div className="auto-grid stagger-fade-in" style={{ gap: '20px' }}>
         {/* Personal Info */}
-        <div style={{ backgroundColor: 'var(--color-bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)' }}>
+        <div className="glass-card">
           <h3 style={{ margin: '0 0 20px', fontSize: '1rem' }}>Personal Info</h3>
           <form onSubmit={handleSave}>
             <div style={{ marginBottom: '14px' }}>

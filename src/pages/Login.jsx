@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import { Mail, Lock, Info } from 'lucide-react';
 import Button from '../components/Button';
@@ -54,8 +55,11 @@ const Login = () => {
       padding: '40px 0',
     }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
-        <div
-          className="fade-up visible card edge-to-edge-mobile"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="card premium-card edge-to-edge-mobile"
           style={{
             width: '100%',
             maxWidth: '440px',
@@ -166,7 +170,7 @@ const Login = () => {
           Don't have an account?{' '}
           <Link to="/signup" style={{ fontWeight: '600', color: 'var(--color-primary)' }}>Sign up free</Link>
         </p>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

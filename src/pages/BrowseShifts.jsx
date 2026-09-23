@@ -119,7 +119,7 @@ const BrowseShifts = () => {
 
         {/* Results */}
         {filtered.length > 0 ? (
-          <div className="grid-3">
+          <div className="auto-grid stagger-fade-in">
             {filtered.map(s => <ShiftCard key={s.id} shift={s} />)}
           </div>
         ) : (

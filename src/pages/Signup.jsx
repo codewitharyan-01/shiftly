@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import Button from '../components/Button';
 import Input from '../components/Input';
@@ -137,7 +138,13 @@ const Signup = () => {
   );
 
   const workerFields = (
-    <div className="fade-up visible">
+    <motion.div
+      key="worker"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.3 }}
+    >
       <div style={{ marginBottom: '16px' }}>
         <label style={{ fontSize: '0.95rem', fontWeight: '500', color: 'var(--color-text-main)', display: 'block', marginBottom: '8px' }}>Skills (Select all that apply)</label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
@@ -164,11 +171,17 @@ const Signup = () => {
           <option value="anytime">Anytime</option>
         </select>
       </div>
-    </div>
+    </motion.div>
   );
 
   const posterFields = (
-    <div className="fade-up visible">
+    <motion.div
+      key="poster"
+      initial={{ opacity: 0, x: -20 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 20 }}
+      transition={{ duration: 0.3 }}
+    >
       <Input label="Business/Organization Name" id="businessName" name="businessName" placeholder="ABC Logistics" value={formData.businessName} onChange={handleInputChange} />
       
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
@@ -188,14 +201,17 @@ const Signup = () => {
       </div>
 
       <Input label="GST/PAN Number (Optional)" id="gst" name="gst" placeholder="ABCDE1234F" value={formData.gst} onChange={handleInputChange} />
-    </div>
+    </motion.div>
   );
 
   return (
     <div className="section-padding" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'center' }}>
-        <div 
-          className="fade-up visible card edge-to-edge-mobile" 
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+          className="card premium-card edge-to-edge-mobile"
           style={{
             width: '100%',
             maxWidth: '500px',
@@ -260,7 +276,7 @@ const Signup = () => {
         <p style={{ textAlign: 'center', marginTop: '32px', fontSize: '0.95rem', color: 'var(--color-text-muted)' }}>
           Already have an account? <Link to="/login" style={{ fontWeight: '600' }}>Log in</Link>
         </p>
-        </div>
+        </motion.div>
       </div>
 
       <Modal isOpen={showOtp} onClose={() => setShowOtp(false)} title="Verify Your Phone">

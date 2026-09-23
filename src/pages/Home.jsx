@@ -1,23 +1,27 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { motion, useInView } from 'framer-motion';
 import { Search, CheckCircle, IndianRupee, Star, ArrowRight, MapPin, Users, Zap } from 'lucide-react';
 import Button from '../components/Button';
 import ShiftCard from '../components/ShiftCard';
 import { ShiftContext } from '../context/ShiftContext';
 import { LanguageContext } from '../context/LanguageContext';
 import { mockTestimonials } from '../utils/mockData';
-import { useScrollAnimation } from '../utils/useScrollAnimation';
 
-const FadeSection = ({ children, style = {}, className = '' }) => {
-  const [ref, isVisible] = useScrollAnimation({ threshold: 0.08 });
+const FadeSection = ({ children, style = {}, className = '', delay = 0 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={`fade-up ${isVisible ? 'visible' : ''} ${className}`}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
       style={style}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
@@ -55,9 +59,21 @@ const Home = () => {
       >
         {/* Soft background shape */}
         <div style={{
-          position: 'absolute', top: '-60px', left: '50%', transform: 'translateX(-50%)',
-          width: '600px', height: '400px',
-          background: 'radial-gradient(ellipse at center, rgba(0,122,255,0.07) 0%, transparent 70%)',
+          position: 'absolute', top: '-10%', left: '50%', transform: 'translateX(-50%)',
+          width: '80%', height: '800px',
+          background: 'radial-gradient(ellipse at top, rgba(0,122,255,0.15) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', bottom: '-20%', left: '-10%',
+          width: '500px', height: '500px',
+          background: 'radial-gradient(circle at center, rgba(175, 82, 222, 0.08) 0%, transparent 60%)',
+          pointerEvents: 'none',
+        }} />
+        <div style={{
+          position: 'absolute', top: '20%', right: '-10%',
+          width: '400px', height: '400px',
+          background: 'radial-gradient(circle at center, rgba(52,199,89,0.08) 0%, transparent 60%)',
           pointerEvents: 'none',
         }} />
 
@@ -118,8 +134,8 @@ const Home = () => {
               { icon: <CheckCircle size={24} color="var(--color-success)" />, bg: 'var(--color-success-bg)', title: 'Show Up & Work', desc: 'Verified shifts with clear instructions. Just arrive and get to work.' },
               { icon: <IndianRupee size={24} color="var(--color-warning)" />, bg: 'var(--color-warning-bg)', title: 'Get Paid Instantly', desc: 'Earnings directly to your UPI account the moment a shift ends.' },
             ].map((step, i) => (
-              <FadeSection key={i} style={{ transitionDelay: `${i * 0.1}s` }}>
-                <div className="card" style={{ textAlign: 'center', padding: '32px 24px' }}>
+              <FadeSection key={i} delay={i * 0.1}>
+                <div className="card hover-lift premium-card" style={{ textAlign: 'center', padding: '32px 24px', backgroundColor: 'var(--color-bg-card)', border: '1px solid var(--color-border)' }}>
                   <div style={{ display: 'inline-flex', padding: '14px', backgroundColor: step.bg, borderRadius: '14px', marginBottom: '20px' }}>
                     {step.icon}
                   </div>
@@ -147,7 +163,7 @@ const Home = () => {
 
           <div className="grid-3">
             {featuredShifts.map((shift, i) => (
-              <FadeSection key={shift.id} style={{ transitionDelay: `${i * 0.07}s` }}>
+              <FadeSection key={shift.id} delay={i * 0.07}>
                 <ShiftCard shift={shift} />
               </FadeSection>
             ))}
@@ -165,8 +181,8 @@ const Home = () => {
 
           <div className="grid-3">
             {mockTestimonials.map((t, i) => (
-              <FadeSection key={t.id} style={{ transitionDelay: `${i * 0.1}s` }}>
-                <div className="card card-hover" style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+              <FadeSection key={t.id} delay={i * 0.1}>
+                <div className="card hover-lift premium-card" style={{ height: '100%', display: 'flex', flexDirection: 'column', backgroundColor: 'var(--color-bg-card)', border: '1px solid var(--color-border)' }}>
                   <div style={{ display: 'flex', gap: '2px', marginBottom: '14px' }}>
                     {[...Array(5)].map((_, si) => <Star key={si} size={14} fill="#FF9500" color="#FF9500" />)}
                   </div>

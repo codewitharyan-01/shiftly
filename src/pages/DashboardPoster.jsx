@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { AuthContext } from '../context/AuthContext';
 import { ShiftContext } from '../context/ShiftContext';
 import { NotificationContext } from '../context/NotificationContext';
@@ -72,7 +73,13 @@ const PosterHome = ({ user, shifts, applications, setActiveTab }) => {
   ];
 
   return (
-    <div className="fade-up visible">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.3 }}
+      className="fade-up visible"
+    >
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '28px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
@@ -107,13 +114,13 @@ const PosterHome = ({ user, shifts, applications, setActiveTab }) => {
 
       {/* Quick Actions */}
       <h2 style={{ fontSize: '1.1rem', marginBottom: '16px', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: '600' }}>Quick Actions</h2>
-      <div className="scroll-x" style={{ marginBottom: '36px' }}>
+      <div className="auto-grid stagger-fade-in" style={{ marginBottom: '36px' }}>
         {[
           { icon: PlusCircle, label: 'Post New Shift', sub: 'Takes 2 minutes', color: 'var(--color-primary)', action: () => setActiveTab('post') },
           { icon: Settings,   label: 'Manage Shifts',  sub: 'Review applicants',     color: 'var(--color-success)', action: () => setActiveTab('manage') },
           { icon: Wallet,     label: 'Add Funds',      sub: 'Top up your wallet',    color: '#FFB800',              action: () => setActiveTab('payments') },
         ].map(qa => (
-          <div key={qa.label} onClick={qa.action} style={{ width: '80vw', maxWidth: '280px', backgroundColor: 'var(--color-bg-card)', padding: '20px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '16px', transition: 'all 0.15s' }}
+          <div key={qa.label} className="premium-card hover-lift" onClick={qa.action} style={{ backgroundColor: 'var(--color-bg-card)', padding: '20px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '16px', transition: 'all 0.15s' }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = qa.color; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--color-border)'; }}>
             <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: `${qa.color}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -218,7 +225,7 @@ const PosterPostShift = ({ user, addShift, addNotification, setActiveTab }) => {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '24px' }}>
         <div style={{ display: 'grid', gap: '24px' }} className="post-grid">
           {/* Form */}
-          <form onSubmit={handleSubmit} style={{ backgroundColor: 'var(--color-bg-card)', padding: '28px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)' }}>
+          <form onSubmit={handleSubmit} className="glass-card stagger-fade-in" style={{ padding: '28px', borderRadius: 'var(--radius-lg)' }}>
             {/* Template picker */}
             <div style={{ marginBottom: '20px' }}>
               <label style={{ fontWeight: '600', fontSize: '0.85rem', display: 'block', marginBottom: '8px', color: 'var(--color-text-muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Quick Templates</label>
@@ -233,7 +240,7 @@ const PosterPostShift = ({ user, addShift, addNotification, setActiveTab }) => {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
+            <div className="auto-grid" style={{ marginBottom: '16px' }}>
               <div style={{ gridColumn: '1 / -1' }}>
                 <label style={{ fontWeight: '600', fontSize: '0.9rem', display: 'block', marginBottom: '6px' }}>Shift Title *</label>
                 <input value={formData.title} onChange={e => setFormData({ ...formData, title: e.target.value })} placeholder="e.g. Warehouse Packer - Nikol" style={inputStyle} />
@@ -303,7 +310,7 @@ const PosterPostShift = ({ user, addShift, addNotification, setActiveTab }) => {
         </div>
       </div>
       <style>{`.post-grid { grid-template-columns: 1fr; }`}</style>
-    </div>
+    </motion.div>
   );
 };
 
@@ -396,7 +403,7 @@ const PosterManageShifts = ({ user, shifts, applications, updateApplicationStatu
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -423,9 +430,9 @@ const PosterPayments = () => {
         </Button>
       </div>
 
-      <div className="grid-2" style={{ marginBottom: '32px' }}>
+      <div className="auto-grid stagger-fade-in" style={{ marginBottom: '32px' }}>
         {/* Balance */}
-        <div style={{ background: 'linear-gradient(135deg, #007AFF, #0051d4)', borderRadius: 'var(--radius-lg)', padding: '28px 32px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+        <div className="premium-card glass-card hover-scale" style={{ background: 'linear-gradient(135deg, #007AFF, #0051d4)', color: '#fff', position: 'relative', overflow: 'hidden', border: 'none' }}>
           <div style={{ position: 'absolute', right: '-20px', top: '-20px', opacity: 0.07 }}><Wallet size={140} /></div>
           <p style={{ margin: '0 0 6px', opacity: 0.8, fontSize: '0.85rem', fontWeight: '600', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Wallet Balance</p>
           <p style={{ fontSize: '2.75rem', fontWeight: '800', margin: '0 0 8px', letterSpacing: '-1px' }}>₹12,400</p>
@@ -499,7 +506,7 @@ const PosterPayments = () => {
           </div>
         )}
       </Modal>
-    </div>
+    </motion.div>
   );
 };
 
@@ -535,8 +542,8 @@ const PosterProfile = ({ user, updateProfile, addNotification }) => {
         </div>
       </div>
 
-      <div className="grid-2" style={{ gap: '20px' }}>
-        <div style={{ backgroundColor: 'var(--color-bg-card)', padding: '24px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--color-border)' }}>
+      <div className="auto-grid stagger-fade-in" style={{ gap: '20px' }}>
+        <div className="glass-card premium-card">
           <h3 style={{ margin: '0 0 20px', fontSize: '1rem' }}>Business Details</h3>
           <form onSubmit={handleSave}>
             {[['Business Name', 'businessName', 'text', 'e.g. ABC Logistics'], ['Contact Email', 'email', 'email', 'you@company.com'], ['Phone', 'phone', 'text', '+91 98765 43210']].map(([label, key, type, placeholder]) => (
@@ -573,7 +580,7 @@ const PosterProfile = ({ user, updateProfile, addNotification }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
